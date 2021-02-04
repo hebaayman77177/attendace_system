@@ -1,0 +1,10 @@
+.registerpage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card{
+    margin-top: 100px;
+}
