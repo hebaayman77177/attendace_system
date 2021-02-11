@@ -3,39 +3,59 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
-function AdminTable({columns2,dataActionCreator}) {
+function AdminTable({ columns, products }) {
+  console.log("🚀 ~ file: AdminTable.js ~ line 7 ~ AdminTable ~ products", products)
+  console.log("🚀 ~ file: AdminTable.js ~ line 7 ~ AdminTable ~ columns", columns)
 
-  const products = [
-    { id: 1, name: 'George', animal: 'Monkey' },
-    { id: 2, name: 'Jeffrey', animal: 'Giraffe' },
-    { id: 3, name: 'Alice', animal: 'Giraffe' },
-    { id: 4, name: 'Foster', animal: 'Tiger' },
-    { id: 5, name: 'Tracy', animal: 'Bear' },
-    { id: 6, name: 'Joesph', animal: 'Lion' },
-    { id: 7, name: 'Tania', animal: 'Deer' },
-    { id: 8, name: 'Chelsea', animal: 'Tiger' },
-    { id: 9, name: 'Benedict', animal: 'Tiger' },
-    { id: 10, name: 'Chadd', animal: 'Lion' },
-    { id: 11, name: 'Delphine', animal: 'Deer' },
-    { id: 12, name: 'Elinore', animal: 'Bear' },
-    { id: 13, name: 'Stokes', animal: 'Tiger' },
-    { id: 14, name: 'Tamara', animal: 'Lion' },
-    { id: 15, name: 'Zackery', animal: 'Bear' }
-  ];
+  // products = [
+  //   { user_id: 1, name: 'George', animal: 'Monkey' },
+  //   { user_id: 2, name: 'Jeffrey', animal: 'Giraffe' },
+  //   { user_id: 3, name: 'Alice', animal: 'Giraffe' },
+  //   { user_id: 4, name: 'Foster', animal: 'Tiger' },
+  //   { user_id: 5, name: 'Tracy', animal: 'Bear' },
+  //   { user_id: 6, name: 'Joesph', animal: 'Lion' },
+  //   { user_id: 7, name: 'Tania', animal: 'Deer' },
+  //   { user_id: 8, name: 'Chelsea', animal: 'Tiger' },
+  //   { user_id: 9, name: 'Benedict', animal: 'Tiger' },
+  //   { user_id: 10, name: 'Chadd', animal: 'Lion' },
+  //   { user_id: 11, name: 'Delphine', animal: 'Deer' },
+  //   { user_id: 12, name: 'Elinore', animal: 'Bear' },
+  //   { user_id: 13, name: 'Stokes', animal: 'Tiger' },
+  //   { user_id: 14, name: 'Tamara', animal: 'Lion' },
+  //   { user_id: 15, name: 'Zackery', animal: 'Bear' }
+  // ];
+  // products = [{ user_id: 1, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 2, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 3, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 4, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 5, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 6, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 7, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 8, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // { user_id: 9, attendance_count: "3", late_count: "2", first_name: "heba9", last_name: "ayman" },
+  // ]
+  // console.log("🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀");
+  // console.log("🚀 ~ file: AdminTable.js ~ line 11 ~ AdminTable ~ products", products)
 
-  const columns = [
-    { dataField: 'id', text: 'Id', sort: true },
-    { dataField: 'name', text: 'Name', sort: true },
-    { dataField: 'animal', text: 'Animal', sort: true }
-  ];
+  // columns = [
+  //   { dataField: 'user_id', text: 'Id', sort: true },
+  //   { dataField: 'name', text: 'Name', sort: true },
+  //   { dataField: 'animal', text: 'Animal', sort: true }
+  // ];
+  // columns = [{ dataField: "user_id", text: "user_id", sort: true }
+  //   , { dataField: "attendance_count", text: "attendance_count", sort: true }
+  //   , { dataField: "late_count", text: "late_count", sort: true }
+  //   , { dataField: "first_name", text: "first_name", sort: true }
+  //   , { dataField: "last_name", text: "last_name", sort: true }]
+  // console.log("🚀 ~ file: AdminTable.js ~ line 29 ~ AdminTable ~ columns", columns)
 
   const defaultSorted = [{
-    dataField: 'name',
+    dataField: 'user_id',
     order: 'desc'
   }];
 
   const pagination = paginationFactory({
-    page: 2,
+    page: 1,
     sizePerPage: 5,
     lastPageText: '>>',
     firstPageText: '<<',
@@ -61,7 +81,7 @@ function AdminTable({columns2,dataActionCreator}) {
 
       <ToolkitProvider
         bootstrap4
-        keyField='id'
+        keyField='user_id'
         data={products}
         columns={columns}
         search

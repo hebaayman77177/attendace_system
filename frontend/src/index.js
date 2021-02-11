@@ -6,9 +6,10 @@ import thunk from 'redux-thunk';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import reducer from './reducers'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(() => 3,{}, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(reducer,{}, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>
