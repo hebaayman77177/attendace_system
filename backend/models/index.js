@@ -14,8 +14,9 @@ db.sequelize = sequelize;
 
 db.attendance = require("./attendance.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
-db.tempUser = require("./tempUser.model.js")(sequelize, Sequelize);
+db.tempUser = require("./temp_user.model.js")(sequelize, Sequelize);
 db.month_info = require("./month_info.model.js")(sequelize, Sequelize);
+db.static_proj_info = require("./static_proj_info.model.js")(sequelize, Sequelize);
 db.static_rule = require("./static_rule.model.js")(sequelize, Sequelize);
 db.user.hasMany(db.attendance,{ onDelete: 'cascade' })
 module.exports = db;

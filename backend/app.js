@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
+let nullModule = require("./init.js");
 // const globalErorrHandler = require("./controllers/globalErorrHandler");
 // const AppError = require("./utils/appError");
 // routers

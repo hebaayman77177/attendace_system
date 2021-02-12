@@ -3,11 +3,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const { promisify } = require("util");
-const uuidv4 = require("uuid/v4")
+const { v4: uuidv4 } = require('uuid');
 // const User = require("./../models/userModel");
 // const catchAsync = require("../utils/catchAsync");
 // const AppError = require("../utils/appError");
-// const sendEmail = require("../utils/email");
+const sendEmail = require("../utils/mail");
 const db = require("../models");
 const User = db.user;
 const TempUser = db.tempUser;
@@ -70,22 +70,16 @@ exports.checkRole = (...roles) => {
         next();
     };
 };
-exports.signUp2 = async (req, res, next) => {
-    let user = {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        address: req.body.address,
-        age: req.body.age,
-        password: req.body.password
-    }
+exports.confirmUser = async (req, res, next) => {
 
-    user.password = await bcrypt.hash(user.password, 12);
-    user = await User.create(user);
+    const confirmId = req.params.confirmId;
+    let user = await TempUser.findOne({where:{temp_uid:confirmId},raw:true,attributes:['first_name','last_name','email','address','age','password']});
+    await User.create(user);
     createSendToken(user, res, 201, "signed up successfully");
 };
 
 exports.signUp = async (req, res, next) => {
+
     let user = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -93,27 +87,29 @@ exports.signUp = async (req, res, next) => {
         address: req.body.address,
         age: req.body.age,
         password: req.body.password,
-        temp_uid:uuidv4()
+        temp_uid: uuidv4()
     }
 
     user.password = await bcrypt.hash(user.password, 12);
     user = await TempUser.create(user);
     //send mail
     const options = {
-        email: user.email,
-        subject: "token to reset your password",
-        message: `please go to this url:${resetUrl} to reset your password`
-      };
-      try {
+        email: 'hebaayman717@gmail.com',
+        subject: "Confirm user registeration",
+        message: `user  ${user.first_name} ${user.last_name} has registered  click <a href="${process.env.BASE_URL + 'auth/confirm/' + user.temp_uid}">${process.env.BASE_URL + 'auth/confirm/' + user.temp_uid}</a> to confirm`
+    };
+    try {
         await sendEmail(options);
-      } catch (err) {
+    } catch (err) {
+        console.log("🚀 ~ file: authController.js ~ line 114 ~ exports.signUp= ~ err", err)
         user.passwordResetToken = undefined;
         user.passwordResetExpiresAt = undefined;
-        return next(
-          new AppError("some thing went wrong while sending the email", 500)
-        );
-      }
-      
+        return res.status(500).json({
+            status: "error",
+            message: "some error happend while sending email :(  please try later!!"
+        });
+    }
+
     createSendToken(user, res, 201, "signed up successfully");
 };
 exports.logIn = async (req, res, next) => {
